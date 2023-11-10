@@ -1,4 +1,5 @@
 import discord
+import os
 from datetime import datetime
 import pytz
 from discord.ext import tasks
@@ -11,6 +12,9 @@ class DiscordInterface:
         self.channel_id = channel_id
         self.status_message = None
         self.server_start_time = None
+        # Get the directory path of the current file
+        self.current_directory = os.path.dirname(os.path.abspath(__file__))
+        self.status_message_id_file = os.path.join(self.current_directory, 'status_message_id.txt')
 
     def schedule_status_check(self, ark_server_manager):
         self.ark_server_manager = ark_server_manager
@@ -79,12 +83,12 @@ class DiscordInterface:
         self.server_start_time = start_time
 
     def store_message_id(self, message_id):
-        with open('status_message_id.txt', 'w') as file:
+        with open(self.status_message_id_file, 'w') as file:
             file.write(str(message_id))
 
     def get_existing_message_id(self):
         try:
-            with open('status_message_id.txt', 'r') as file:
+            with open(self.status_message_id_file, 'r') as file:
                 return int(file.read().strip())
         except FileNotFoundError:
             return None

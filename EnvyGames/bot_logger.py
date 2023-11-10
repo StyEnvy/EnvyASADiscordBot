@@ -1,7 +1,12 @@
 import logging
 from logging.handlers import RotatingFileHandler
+import os
 
-LOG_FILENAME = 'bot_logs.log'
+# Get the directory path of the current file (bot.py)
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+# Set the log file name with the full path
+LOG_FILENAME = os.path.join(current_directory, 'bot_logs.log')
 MAX_BYTES = 5 * 1024 * 1024  # 5 MB
 BACKUP_COUNT = 5  # Keep five old log files
 
