@@ -21,3 +21,5 @@ Setup instructions:
 NOTE: You must create the discord role for administering the server, and set it in the .env for this function to work.
 
 You can change the name of the root folder, but you cannot change the EnvyGames folder name within the bot. This will break functionality.
+
+Join the Envy Games US Discord, grab the Envy Discord Bots role, and you'll see our section on our bot. 
