@@ -7,6 +7,8 @@ Persistent Server Status Embed: The bot maintains an embed in a specified channe
 
 Configurable Timezone: The timestamps in the embed use a configurable timezone, based on the PYTZ library, allowing you to set it as per your local time.
 
+Configurable Server Auto-restart: The bot will restart the server if it detects it has gone down during a heartbeat check. Detection is based on whether or not the process for the server is running or not.
+
 Server Control Commands: Admins can use commands to start, shut down (with a 5-minute warning), or restart the server directly from Discord.
 
 The bot's focus is to provide a straightforward and reliable way to monitor and control your Ark server directly from Discord.
