@@ -1,0 +1,6 @@
+discord.py
+pytz
+mcrcon
+asyncio
+datetime
+psutil

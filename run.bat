@@ -1,18 +1,21 @@
 @echo off
 setlocal
-set "BOT_DIR="
 
-for /d /r "%~dp0" %%D in (EnvyGames) do (
-    if exist "%%D\bot.py" (
-        set "BOT_DIR=%%D"
-        goto :found
-    )
+cd /d "%~dp0"
+
+echo Checking virtual environment...
+if not exist "venv\Scripts\activate.bat" (
+    echo Creating virtual environment...
+    python -m venv venv
 )
-echo Could not find the EnvyGames directory with bot.py.
-goto :eof
 
-:found
-cd /d "%BOT_DIR%"
+echo Activating virtual environment...
+call venv\Scripts\activate.bat
+
+echo Installing dependencies...
+pip install -r requirements.txt
+
+cd EnvyGames
 echo Starting Discord Bot...
 python bot.py
 pause
