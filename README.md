@@ -1,7 +1,7 @@
 # EnvyASADiscordBot
 Discord bot for Ark Survival Ascended
 
-MADE WITH PYTHON VERSION 3.11.5. THIS DOES NOT WORK WITH PYTHON VERSION 3.12.x AT THIS TIME.
+MADE WITH PYTHON VERSION 3.11.5. THIS DOES NOT WORK WITH PYTHON VERSION 3.12.x AT THIS TIME. THIS BOT IS FOR WINDOWS OS. 
 
 https://www.python.org/downloads/release/python-3115/
 Note: When installing python remember to check the box for adding to PATH
