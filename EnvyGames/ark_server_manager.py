@@ -18,7 +18,7 @@ class ArkServerManager:
                 return False
 
             # Start the server using the batch file
-            subprocess.Popen([SERVER_EXECUTABLE], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            subprocess.Popen([SERVER_EXECUTABLE])
             time.sleep(5)  # Wait for a few seconds to give the server time to start
 
             # Check if 'ArkAscendedServer.exe' is running
