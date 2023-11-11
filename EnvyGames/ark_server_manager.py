@@ -39,6 +39,12 @@ class ArkServerManager:
         except PermissionError as perm_err:
             log(f'Permission denied error while starting the server by {user_info}: {perm_err}', 'ERROR')
             return False
+        except OSError as os_err:
+            log(f'OS error while starting the server by {user_info}: {os_err}', 'ERROR')
+            return False
+        except subprocess.SubprocessError as sub_err:
+            log(f'Subprocess error while starting the server by {user_info}: {sub_err}', 'ERROR')
+            return False
         except FileNotFoundError as file_err:
             log(f'File not found error while starting the server by {user_info}: {file_err}', 'ERROR')
             return False
