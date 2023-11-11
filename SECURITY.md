@@ -1,6 +1,6 @@
 # Security Policy
 
-## Supported Versions
+## Supported Envy Games Discord Bot Versions [Not to be confused with individual file versions.]
 
 | Version | Supported          |
 | ------- | ------------------ |

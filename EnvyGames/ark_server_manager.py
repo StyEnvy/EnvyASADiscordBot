@@ -1,6 +1,7 @@
 import subprocess
 import psutil
 import time
+import os
 from config import SERVER_EXECUTABLE, RCON_HOST, RCON_PORT, RCON_PASSWORD, AUTO_RESTART_ON_CRASH
 from bot_logger import log
 from mcrcon import MCRcon
@@ -11,12 +12,37 @@ class ArkServerManager:
 
     def start_server(self, user_info):
         try:
-            # The SERVER_EXECUTABLE should be the path to the batch file that starts the server
-            self.process = subprocess.Popen([SERVER_EXECUTABLE], creationflags=subprocess.CREATE_NEW_CONSOLE)
-            log(f'Server started by {user_info} with PID: {self.process.pid}', 'INFO')
-            return True
+            # Check if the batch file exists and is accessible
+            if not os.path.exists(SERVER_EXECUTABLE):
+                log(f'Server executable not found: {SERVER_EXECUTABLE}', 'ERROR')
+                return False
+
+            # Start the server using the batch file
+            subprocess.Popen([SERVER_EXECUTABLE], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            time.sleep(5)  # Wait for a few seconds to give the server time to start
+
+            # Check if 'ArkAscendedServer.exe' is running
+            server_running = False
+            for proc in psutil.process_iter(['pid', 'name']):
+                if proc.info['name'] == 'ArkAscendedServer.exe':
+                    server_running = True
+                    break
+
+            if server_running:
+                log(f'Server successfully started by {user_info}', 'INFO')
+                return True
+            else:
+                log(f'Server failed to start by {user_info}. ArkAscendedServer.exe not found in processes.', 'ERROR')
+                return False
+
+        except PermissionError as perm_err:
+            log(f'Permission denied error while starting the server by {user_info}: {perm_err}', 'ERROR')
+            return False
+        except FileNotFoundError as file_err:
+            log(f'File not found error while starting the server by {user_info}: {file_err}', 'ERROR')
+            return False
         except Exception as e:
-            log(f'Failed to start the server by {user_info}: {e}', 'ERROR')
+            log(f'Unexpected error occurred while starting the server by {user_info}: {e}', 'ERROR')
             return False
 
     def is_server_running(self):

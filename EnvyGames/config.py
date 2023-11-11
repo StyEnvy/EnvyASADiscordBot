@@ -29,3 +29,4 @@ RCON_HOST = os.getenv('RCON_HOST')  # No default value; must be set in .env
 RCON_PORT = int(os.getenv('RCON_PORT'))  # No default value; must be set in .env
 RCON_PASSWORD = os.getenv('RCON_PASSWORD')  # No default value; must be set in .env
 AUTO_RESTART_ON_CRASH = os.getenv('AUTO_RESTART_ON_CRASH', 'False') == 'True'  # Defaults to False if not set
+STATUS_CHECK_INTERVAL = int(os.getenv('STATUS_CHECK_INTERVAL', 15))

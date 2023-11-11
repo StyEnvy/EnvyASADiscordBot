@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 from discord.ext import tasks
 from bot_logger import log
-from config import BOT_TIMEZONE, SERVER_NAME
+from config import BOT_TIMEZONE, SERVER_NAME, STATUS_CHECK_INTERVAL
 
 class DiscordInterface:
     def __init__(self, bot, channel_id):
@@ -20,7 +20,7 @@ class DiscordInterface:
         self.ark_server_manager = ark_server_manager
         self.status_check_loop.start()
 
-    @tasks.loop(minutes=15)
+    @tasks.loop(minutes=STATUS_CHECK_INTERVAL)
     async def status_check_loop(self):
         if self.ark_server_manager.is_server_running():
             await self.update_status_embed('Online')
