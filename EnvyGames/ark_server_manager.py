@@ -89,3 +89,17 @@ class ArkServerManager:
             return self.start_server(user_info)
         else:
             return False
+
+    def get_player_count(self):
+        try:
+            response = self.send_rcon_command("ListPlayers")
+            log(f"ListPlayers RCON response: {response}", 'INFO')
+
+            # Filter lines that start with a digit followed by a period (e.g., "0.", "1.", etc.)
+            player_lines = [line for line in response.split('\n') if line.strip() and line.strip()[0].isdigit()]
+            player_count = len(player_lines)
+
+            return player_count
+        except Exception as e:
+            log(f"Error fetching player count: {e}", 'ERROR')
+            return None

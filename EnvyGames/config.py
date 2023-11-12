@@ -23,6 +23,7 @@ SERVER_EXECUTABLE = os.getenv('SERVER_EXECUTABLE') # No default value; must be s
 STATUS_CHANNEL_ID = int(os.getenv('STATUS_CHANNEL_ID')) # No default value; must be set in .env
 ARK_ADMIN_ROLE = os.getenv('ARK_ADMIN_ROLE', 'Administrator')  # Default to Administrator if not set
 BOT_TIMEZONE = os.getenv('BOT_TIMEZONE', 'US/Eastern')  # Default to 'US/Eastern' if not set
+BOT_TIMEZONE_UNAME = os.getenv('BOT_TIMEZONE_UNAME', 'Eastern')  # Default to 'Eastern' if not set
 GAME_STATUS = os.getenv('GAME_STATUS', 'Ark Survival Ascended')  # Default to 'Ark Survival Ascended' if not set
 SERVER_NAME = os.getenv('SERVER_NAME', 'Envy Games ASA Server')  # Default to 'Envy Games ASA Server' if not set
 RCON_HOST = os.getenv('RCON_HOST')  # No default value; must be set in .env

@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 from discord.ext import tasks
 from bot_logger import log
-from config import BOT_TIMEZONE, SERVER_NAME, STATUS_CHECK_INTERVAL
+from config import BOT_TIMEZONE, BOT_TIMEZONE_UNAME, SERVER_NAME, STATUS_CHECK_INTERVAL
 
 class DiscordInterface:
     def __init__(self, bot, channel_id):
@@ -22,10 +22,9 @@ class DiscordInterface:
 
     @tasks.loop(minutes=STATUS_CHECK_INTERVAL)
     async def status_check_loop(self):
-        if self.ark_server_manager.is_server_running():
-            await self.update_status_embed('Online')
-        else:
-            await self.update_status_embed('Offline')
+        server_running = self.ark_server_manager.is_server_running()
+        player_count = self.ark_server_manager.get_player_count() if server_running else 0
+        await self.update_status_embed('Online' if server_running else 'Offline', player_count)
 
     @status_check_loop.error
     async def status_check_loop_error(self, error):
@@ -34,40 +33,41 @@ class DiscordInterface:
     async def on_status_check_error(self, exception):
         log(f"Status check failed: {exception}", 'ERROR')
 
-    async def post_status_embed(self, status):
+    async def post_status_embed(self, status, player_count=None):
         channel = self.bot.get_channel(self.channel_id)
         if not channel:
             print(f"Could not find channel with ID: {self.channel_id}")  # Debug print
             return
 
         # Check for an existing status message ID and try to fetch the message
-        existing_message_id = self.get_existing_message_id()  # Method to implement
+        existing_message_id = self.get_existing_message_id()
         if existing_message_id:
             try:
                 self.status_message = await channel.fetch_message(existing_message_id)
                 return
             except discord.NotFound:
-            # If the message is not found, proceed to post a new one
+                # If the message is not found, proceed to post a new one
                 pass
 
         # If no existing message, post a new one
-        embed = self.create_status_embed(status)
+        embed = self.create_status_embed(status, player_count)
         self.status_message = await channel.send(embed=embed)
-        self.store_message_id(self.status_message.id)  # Method to implement
+        self.store_message_id(self.status_message.id)
 
-    async def update_status_embed(self, status):
+    async def update_status_embed(self, status, player_count=None):
         if not self.status_message:
-            await self.post_status_embed(status)
+            await self.post_status_embed(status, player_count)
             return
 
-        embed = self.create_status_embed(status)
+        embed = self.create_status_embed(status, player_count)
         await self.status_message.edit(embed=embed)
 
-    def create_status_embed(self, status):
+    def create_status_embed(self, status, player_count=None):
         timezone = pytz.timezone(BOT_TIMEZONE)
         now = datetime.now(timezone)
         embed = discord.Embed(title=f"{SERVER_NAME} Server Status", color=0x00ff00)
         embed.add_field(name="Status", value=status, inline=False)
+        embed.add_field(name="Players Online", value=str(player_count) if player_count is not None else "N/A", inline=False)
         embed.add_field(name="Last Updated", value=now.strftime(f'%Y-%m-%d %H:%M:%S {BOT_TIMEZONE}'), inline=False)
 
         if self.server_start_time:
@@ -76,7 +76,7 @@ class DiscordInterface:
         else:
             embed.add_field(name="Server Started At", value="Not started since bot initialization", inline=False)
 
-        embed.set_footer(text=f"All times are in {BOT_TIMEZONE}")
+        embed.set_footer(text=f"All times are in {BOT_TIMEZONE_UNAME}")
         return embed
 
     def set_server_start_time(self, start_time):

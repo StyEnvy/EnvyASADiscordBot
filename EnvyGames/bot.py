@@ -13,21 +13,15 @@ import pytz
 # Define the intents for the bot
 intents = discord.Intents.default()
 intents.message_content = True
-
-# Initialize the bot with the specified command prefix and intents
 bot = commands.Bot(command_prefix=COMMAND_PREFIX, intents=intents)
-
 # Instantiate the ArkServerManager.py not to be confused with ASE's ASM.
 ark_manager = ArkServerManager()
-
-# Initialize DiscordInterface with the bot instance and the status channel ID from the .env
 discord_interface = DiscordInterface(bot, STATUS_CHANNEL_ID)
 
 @bot.event
 async def on_ready():
     try:
         log('Bot is ready.', 'INFO')
-        # This sets the bot's playing status
         await bot.change_presence(activity=discord.Game(name=GAME_STATUS))
 
         # Check for an existing status message and update or post a new one
@@ -43,7 +37,6 @@ async def on_ready():
         else:
             # If no existing status message found, post a new one
             await discord_interface.post_status_embed("Initializing...")
-
         # Schedule the status check loop to start
         discord_interface.schedule_status_check(ark_manager)
     except Exception as e:
@@ -66,20 +59,14 @@ async def start_server(ctx):
 @bot.command(name='shutdownasa')
 @has_role(ARK_ADMIN_ROLE)
 async def shutdown_server(ctx):
-    # Inform admin that the shutdown process is starting
     await ctx.send('Initiating server shutdown sequence...')
-    
-    # First stage: Send server chat warning
+    # Warn players that the server is shutting down
     warning_response = ark_manager.send_rcon_command("serverchat The server is shutting down in 5 minutes. Please log-off the server.")
     log(f'Server chat warning response: {warning_response}', 'INFO')
-
-    # Schedule the actual shutdown after 5 minutes
     await asyncio.sleep(300)  # 300 seconds = 5 minutes
-
-    # Second stage: Shut down the server
+    # Shut down the server
     shutdown_response = ark_manager.shutdown_server()
-    await ctx.send(f'Server shutdown command issued. Response: {shutdown_response}')
-    
+    await ctx.send(f'Server shutdown command issued. Response: {shutdown_response}') 
     # Update the status embed to show the server as offline
     await discord_interface.update_status_embed('Offline')
 
