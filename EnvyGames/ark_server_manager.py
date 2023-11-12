@@ -2,7 +2,6 @@ import subprocess
 import psutil
 import time
 import os
-import asyncio
 from config import SERVER_EXECUTABLE, RCON_HOST, RCON_PORT, RCON_PASSWORD, AUTO_RESTART_ON_CRASH
 from bot_logger import log
 from mcrcon import MCRcon
@@ -44,9 +43,6 @@ class ArkServerManager:
             return False
         except subprocess.SubprocessError as sub_err:
             log(f'Subprocess error while starting the server by {user_info}: {sub_err}', 'ERROR')
-            return False
-        except FileNotFoundError as file_err:
-            log(f'File not found error while starting the server by {user_info}: {file_err}', 'ERROR')
             return False
         except Exception as e:
             log(f'Unexpected error occurred while starting the server by {user_info}: {e}', 'ERROR')

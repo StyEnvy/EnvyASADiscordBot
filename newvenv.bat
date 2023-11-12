@@ -12,8 +12,8 @@ if not exist "venv\Scripts\activate.bat" (
 echo Activating virtual environment...
 call venv\Scripts\activate.bat
 
-cd EnvyGames
-echo Starting Discord Bot...
-python bot.py
+echo Installing dependencies...
+pip install -r requirements.txt
+
 pause
 endlocal
