@@ -1,6 +1,6 @@
 # EnvyASADiscordBot
 Discord bot for Ark Survival Ascended
-
+My Discord: https://discord.gg/VWT6D6sN9k
 This bot was made with Python Version 3.11.5 and the Discord.py library for Python.
 
 Setup instructions:
