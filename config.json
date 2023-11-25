@@ -1,0 +1,47 @@
+{
+    "bot_setup": {
+      "token": "",
+      "prefix": "$"
+    },
+    "embed_setup": {
+      "community_name": "Envy Games US",
+      "servers": [
+        {
+            "name": "ServerName1",
+            "address": "127.0.0.1",
+            "rconport": "12345",
+            "rconpassword": "Password"
+          },
+          {
+            "name": "ServerName2",
+            "address": "127.0.0.1",
+            "rconport": "12345",
+            "rconpassword": "Password"
+          }
+      ],
+      "embed_channel_id": "",
+      "status_check_interval": 600 
+    },
+      "server_control": {
+          "servers": [
+              {
+                  "batch_path": "",
+                  "rcon_port": 12345,
+                  "rcon_ip": "127.0.0.1",
+                  "rcon_password": "",
+                  "warning_times": [10, 5]
+              },
+              {
+                "batch_path": "",
+                "rcon_port": 12345,
+                "rcon_ip": "127.0.0.1",
+                "rcon_password": "0",
+                "warning_times": [10, 5]
+            }
+          ],
+          "control_channel_id": "",
+          "required_role": "Ark Moderator"
+      }
+  }
+  
+  
