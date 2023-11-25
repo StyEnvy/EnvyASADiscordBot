@@ -14,7 +14,6 @@ from EnvyGames.embed_handler import handle_embed_posting
 from EnvyGames.button_handler import handle_server_control_buttons
 from EnvyGames.server_control import start_server, stop_server
 import asyncio
-import json
 
 config_manager = ConfigManager('config.json')
 log_manager = LogManager()

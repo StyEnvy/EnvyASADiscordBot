@@ -15,19 +15,23 @@ async def handle_embed_posting(bot):
     try:
         with open('core/embed_message_id.json', 'r') as file:
             message_data = json.load(file)
-        message_id = message_data.get('message_id')
+            message_id = message_data.get('message_id')
+
         if message_id:
             await channel.fetch_message(int(message_id))
             log_manager.info("Existing embed message found.")
-        else:
-            raise FileNotFoundError
+            return
+
     except (FileNotFoundError, discord.NotFound, json.JSONDecodeError):
         log_manager.info("Existing embed message not found. Posting new embed.")
-        if channel:
-            embed = generate_server_embed(embed_config)
-            message = await channel.send(embed=embed)
-            # Ensure the save_embed_message_id function is accessible
-            from core.bot_utils import save_embed_message_id
-            save_embed_message_id(message.id)
-        else:
-            log_manager.error("Embed channel not found.")
+
+    if channel:
+        embed = generate_server_embed(embed_config)
+        message = await channel.send(embed=embed)
+        save_embed_message_id(message.id)  # Save the new message ID
+    else:
+        log_manager.error("Embed channel not found.")
+
+def save_embed_message_id(message_id):
+    with open('core/embed_message_id.json', 'w') as file:
+        json.dump({'message_id': message_id}, file)
