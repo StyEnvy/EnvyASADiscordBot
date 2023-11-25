@@ -51,7 +51,8 @@ embed_channel_id = The discord channel ID where you want your embed to be posted
 status_check_interval = Time in seconds for the embed's status update
 
 The server_control section of the configuration is responsible for setting up and managing server start/stop functionalities. It is an array where each element represents a server with its specific control settings. This configuration dynamically generates start and stop control buttons for each server and posts them to a specified Discord channel. Each server in the array generates a pair of buttons, allowing for individual control over its operations.
-Structure and Explanation
+
+Structure and Explanation:
 
     servers: This is an array where each element represents a server. Each server element contains several fields:
         batch_path: The path to the batch file used to start the server.
