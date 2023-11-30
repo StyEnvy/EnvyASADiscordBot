@@ -38,20 +38,21 @@ async def handle_server_control_buttons(bot):
 
     # Update or create new button messages
     for index, server in enumerate(servers):
+        server_name = server.get('name', f'Server {index + 1}')  # Fallback to 'Server {index+1}' if 'name' is not present
         try:
             message_id = stored_ids[index] if index < len(stored_ids) else None
             if message_id:
                 message = await control_channel.fetch_message(int(message_id))
-                log_manager.info(f"Updating server control buttons for Server {index + 1}.")
+                log_manager.info(f"Updating server control buttons for {server_name}.")
                 # Update the message with new buttons
                 view = create_server_control_buttons(index)
-                await message.edit(view=view)
+                await message.edit(content=f"{server_name} Control Buttons:", view=view)
             else:
                 raise FileNotFoundError
         except (FileNotFoundError, discord.NotFound):
-            log_manager.info(f"Posting new server control buttons for Server {index + 1}.")
+            log_manager.info(f"Posting new server control buttons for {server_name}.")
             view = create_server_control_buttons(index)
-            button_message = await control_channel.send(f"Server {index + 1} Control Buttons:", view=view)
+            button_message = await control_channel.send(f"{server_name} Control Buttons:", view=view)
             if index < len(stored_ids):
                 stored_ids[index] = button_message.id
             else:

@@ -10,14 +10,3 @@ def create_server_control_buttons(server_index):
     view.add_item(start_button)
     view.add_item(stop_button)
     return view
-
-def process_button_interaction(interaction):
-    custom_id = interaction.component.custom_id
-    server_number = int(custom_id.split("_")[1])
-
-    if custom_id.startswith("start_"):
-        # Logic to start the server
-        return f"Starting Server {server_number + 1}"
-    elif custom_id.startswith("stop_"):
-        # Logic to stop the server
-        return f"Stopping Server {server_number + 1}"

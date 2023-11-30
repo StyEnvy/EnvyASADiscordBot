@@ -47,6 +47,8 @@ def load_current_statuses():
         return {}
 
 def save_current_statuses(statuses):
-    with open('core/server_statuses.json', 'w') as file:
-        json.dump(statuses, file)
-        log_manager.info("Saved updated server statuses.")
+    try:
+        with open('core/server_statuses.json', 'w') as file:
+            json.dump(statuses, file)
+    except Exception as e:
+        log_manager.error(f"Failed to save updated server statuses: {e}")

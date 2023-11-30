@@ -7,16 +7,22 @@
       "community_name": "Envy Games US",
       "servers": [
         {
-            "name": "ServerName1",
+            "name": "Envy Games",
             "address": "127.0.0.1",
-            "rconport": "12345",
-            "rconpassword": "Password"
+            "rconport": "27000",
+            "rconpassword": ""
           },
           {
-            "name": "ServerName2",
+            "name": "Envy Games",
             "address": "127.0.0.1",
-            "rconport": "12345",
-            "rconpassword": "Password"
+            "rconport": "27000",
+            "rconpassword": ""
+          },
+          {
+            "name": "Envy Games",
+            "address": "127.0.0.1",
+            "rconport": "27000",
+            "rconpassword": ""
           }
       ],
       "embed_channel_id": "",
@@ -25,19 +31,29 @@
       "server_control": {
           "servers": [
               {
-                  "batch_path": "",
-                  "rcon_port": 12345,
+                  "name": "Envy Games",
+                  "batch_path": "C:/SteamLibrary/steamapps/common/ARK Survival Ascended Dedicated Server/ServerRun.bat",
+                  "rcon_port": 27000,
                   "rcon_ip": "127.0.0.1",
-                  "rcon_password": "",
+                  "rcon_password": "Password",
                   "warning_times": [10, 5]
               },
               {
-                "batch_path": "",
-                "rcon_port": 12345,
+                "name": "Envy Games",
+                "batch_path": "C:/SteamLibrary/steamapps/common/ARK Survival Ascended Dedicated Server/ServerRun.bat",
+                "rcon_port": 27000,
                 "rcon_ip": "127.0.0.1",
-                "rcon_password": "0",
+                "rcon_password": "Password",
                 "warning_times": [10, 5]
-            }
+            },
+            {
+              "name": "Envy Games",
+              "batch_path": "C:/SteamLibrary/steamapps/common/ARK Survival Ascended Dedicated Server/ServerRun.bat",
+              "rcon_port": 27000,
+              "rcon_ip": "127.0.0.1",
+              "rcon_password": "Password",
+              "warning_times": [10, 5]
+          }
           ],
           "control_channel_id": "",
           "required_role": "Ark Moderator"
